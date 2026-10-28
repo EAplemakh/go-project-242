@@ -15,7 +15,7 @@ func GetPathSize(systemPath string) (int64, error) {
 	}
 
 	if fiRoot.IsDir() {
-		files, err := os.ReadDir(".")
+		files, err := os.ReadDir(systemPath)
 		if err != nil {
 			return 0, err
 		}
