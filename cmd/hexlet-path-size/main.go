@@ -2,6 +2,7 @@
 package main
 
 import (
+	"code/pkg/convertunits"
 	"code/pkg/pathsize"
 	"context"
 	"fmt"
@@ -12,11 +13,23 @@ import (
 )
 
 func main() {
-	var filePath string
+	var (
+		filePath    string
+		chooseUnits bool
+	)
 
 	cmd := &cli.Command{
 		Name:  "hexlet-path-size",
 		Usage: "print size of a file or directory",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:        "human",
+				Aliases:     []string{"H"},
+				Value:       false,
+				Usage:       "human-readable sizes (auto-select unit)",
+				Destination: &chooseUnits,
+			},
+		},
 		Arguments: []cli.Argument{
 			&cli.StringArg{
 				Name:        "path",
@@ -34,7 +47,7 @@ func main() {
 				return err
 			}
 
-			fmt.Printf("%dB\t%s\n", res, filePath)
+			fmt.Printf("%s\t%s\n", convertunits.FormatUnitString(res, chooseUnits), filePath)
 
 			return nil
 		},
