@@ -8,11 +8,11 @@ var units = [7]string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
 const unitDiv float64 = 1000.0
 
 // FormatUnitString returns formatted string <size><unit>.
-func FormatUnitString(sizeBytes int64, useBytes bool) string {
+func FormatUnitString(sizeBytes int64, chooseUnits bool) string {
 	size := float64(sizeBytes)
 
 	res := fmt.Sprintf("%dB", sizeBytes)
-	if size < unitDiv || useBytes {
+	if size < unitDiv || !chooseUnits {
 		return res
 	}
 
@@ -23,6 +23,8 @@ func FormatUnitString(sizeBytes int64, useBytes bool) string {
 		}
 
 		res = fmt.Sprintf("%.1f%s", size, unit)
+
+		break
 	}
 
 	return res

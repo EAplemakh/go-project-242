@@ -5,6 +5,7 @@ import (
 	"code/pkg/convertunits"
 	"code/pkg/pathsize"
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -39,7 +40,7 @@ func main() {
 		HideHelpCommand: true,
 		Action: func(_ context.Context, _ *cli.Command) error {
 			if filePath == "" {
-				return fmt.Errorf("ошибка: необходимо указать путь к файлу или директории")
+				return errors.New("ошибка: необходимо указать путь к файлу или директории")
 			}
 
 			res, err := pathsize.GetPathSize(filePath)
