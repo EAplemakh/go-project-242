@@ -1,3 +1,4 @@
+// Package main is the entry point for the hexlet-path-size CLI utility.
 package main
 
 import (
@@ -14,16 +15,16 @@ func main() {
 	var filePath string
 
 	cmd := &cli.Command{
-		Name: "hexlet-path-size",
+		Name:  "hexlet-path-size",
 		Usage: "print size of a file or directory",
-        Arguments: []cli.Argument{
-            &cli.StringArg{
-                Name: "path",
-                Destination: &filePath,
-            },
-        },
+		Arguments: []cli.Argument{
+			&cli.StringArg{
+				Name:        "path",
+				Destination: &filePath,
+			},
+		},
 		HideHelpCommand: true,
-		Action: func(ctx context.Context, c *cli.Command) error {
+		Action: func(_ context.Context, _ *cli.Command) error {
 			if filePath == "" {
 				return fmt.Errorf("ошибка: необходимо указать путь к файлу или директории")
 			}
@@ -34,10 +35,11 @@ func main() {
 			}
 
 			fmt.Printf("%dB\t%s\n", res, filePath)
+
 			return nil
 		},
-    }
+	}
 	if err := cmd.Run(context.Background(), os.Args); err != nil {
-        log.Fatal(err)
-    }
+		log.Fatal(err)
+	}
 }
