@@ -2,7 +2,7 @@
 package main
 
 import (
-	"code/pkg"
+	"code/pkg/pathsize"
 	"context"
 	"fmt"
 	"log"
@@ -29,7 +29,7 @@ func main() {
 				return fmt.Errorf("ошибка: необходимо указать путь к файлу или директории")
 			}
 
-			res, err := pkg.GetPathSize(filePath)
+			res, err := pathsize.GetPathSize(filePath)
 			if err != nil {
 				return err
 			}

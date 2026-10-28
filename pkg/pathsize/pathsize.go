@@ -1,5 +1,5 @@
-// Package pkg provides functions for calculating file and directory sizes.
-package pkg
+// Package pathsize provides functions for calculating file and directory sizes.
+package pathsize
 
 import (
 	"os"
