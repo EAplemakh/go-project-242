@@ -15,8 +15,9 @@ import (
 
 func main() {
 	var (
-		filePath    string
-		chooseUnits bool
+		filePath      string
+		chooseUnits   bool
+		includeHidden bool
 	)
 
 	cmd := &cli.Command{
@@ -29,6 +30,13 @@ func main() {
 				Value:       false,
 				Usage:       "human-readable sizes (auto-select unit)",
 				Destination: &chooseUnits,
+			},
+			&cli.BoolFlag{
+				Name:        "all",
+				Aliases:     []string{"a"},
+				Value:       false,
+				Usage:       "include hidden files and directories",
+				Destination: &includeHidden,
 			},
 		},
 		Arguments: []cli.Argument{
@@ -43,7 +51,7 @@ func main() {
 				return errors.New("ошибка: необходимо указать путь к файлу или директории")
 			}
 
-			res, err := pathsize.GetPathSize(filePath)
+			res, err := pathsize.GetPathSize(filePath, includeHidden)
 			if err != nil {
 				return err
 			}
