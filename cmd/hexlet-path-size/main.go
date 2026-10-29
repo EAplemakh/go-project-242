@@ -18,6 +18,7 @@ func main() {
 		filePath      string
 		chooseUnits   bool
 		includeHidden bool
+		recursive     bool
 	)
 
 	cmd := &cli.Command{
@@ -38,6 +39,13 @@ func main() {
 				Usage:       "include hidden files and directories",
 				Destination: &includeHidden,
 			},
+			&cli.BoolFlag{
+				Name:        "recursive",
+				Aliases:     []string{"r"},
+				Value:       false,
+				Usage:       "recursive size of directories",
+				Destination: &recursive,
+			},
 		},
 		Arguments: []cli.Argument{
 			&cli.StringArg{
@@ -51,7 +59,7 @@ func main() {
 				return errors.New("ошибка: необходимо указать путь к файлу или директории")
 			}
 
-			res, err := pathsize.GetPathSize(filePath, includeHidden)
+			res, err := pathsize.GetPathSize(filePath, includeHidden, recursive)
 			if err != nil {
 				return err
 			}

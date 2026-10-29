@@ -4,11 +4,12 @@ package pathsize
 import (
 	"errors"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 // GetPathSize returns the size of the file or directory at systemPath in bytes.
-func GetPathSize(systemPath string, includeHidden bool) (int64, error) {
+func GetPathSize(systemPath string, includeHidden, recursive bool) (int64, error) {
 	var res int64
 
 	fiRoot, err := os.Lstat(systemPath)
@@ -36,7 +37,16 @@ func GetPathSize(systemPath string, includeHidden bool) (int64, error) {
 				return 0, err
 			}
 
-			res += fi.Size()
+			if fi.IsDir() && recursive {
+				dirSum, err := GetPathSize(filepath.Join(systemPath, fi.Name()), includeHidden, recursive)
+				if err != nil {
+					return 0, err
+				}
+
+				res += dirSum
+			} else {
+				res += fi.Size()
+			}
 		}
 	} else {
 		res = fiRoot.Size()
