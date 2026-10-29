@@ -1,12 +1,17 @@
-// Package pathsize provides functions for calculating file and directory sizes.
-package pathsize
+// Package code provides functions for getting size of files and dirs
+package code
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
+var units = [7]string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+
+const unitDiv float64 = 1000.0
 
 // GetPathSize returns the size of the file or directory at systemPath in bytes.
 func GetPathSize(systemPath string, includeHidden, recursive bool) (int64, error) {
@@ -53,4 +58,27 @@ func GetPathSize(systemPath string, includeHidden, recursive bool) (int64, error
 	}
 
 	return res, nil
+}
+
+// FormatUnitString returns formatted string <size><unit>.
+func FormatUnitString(sizeBytes int64, chooseUnits bool) string {
+	size := float64(sizeBytes)
+
+	res := fmt.Sprintf("%dB", sizeBytes)
+	if size < unitDiv || !chooseUnits {
+		return res
+	}
+
+	for _, unit := range units {
+		if size >= unitDiv {
+			size /= unitDiv
+			continue
+		}
+
+		res = fmt.Sprintf("%.1f%s", size, unit)
+
+		break
+	}
+
+	return res
 }

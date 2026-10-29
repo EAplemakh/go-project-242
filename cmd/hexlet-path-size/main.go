@@ -2,8 +2,7 @@
 package main
 
 import (
-	"code/pkg/convertunits"
-	"code/pkg/pathsize"
+	"code"
 	"context"
 	"errors"
 	"fmt"
@@ -60,12 +59,12 @@ func main() {
 				return errors.New("ошибка: необходимо указать путь к файлу или директории")
 			}
 
-			res, err := pathsize.GetPathSize(filePath, includeHidden, recursive)
+			res, err := code.GetPathSize(filePath, includeHidden, recursive)
 			if err != nil {
 				return err
 			}
 
-			fmt.Printf("%s\t%s\n", convertunits.FormatUnitString(res, chooseUnits), filePath)
+			fmt.Printf("%s\t%s\n", code.FormatUnitString(res, chooseUnits), filePath)
 
 			return nil
 		},
