@@ -59,12 +59,12 @@ func main() {
 				return errors.New("ошибка: необходимо указать путь к файлу или директории")
 			}
 
-			res, err := code.GetPathSize(filePath, includeHidden, recursive)
+			res, err := code.GetPathSize(filePath, recursive, chooseUnits, includeHidden)
 			if err != nil {
 				return err
 			}
 
-			fmt.Printf("%s\t%s\n", code.FormatUnitString(res, chooseUnits), filePath)
+			fmt.Printf("%s\t%s\n", res, filePath)
 
 			return nil
 		},
