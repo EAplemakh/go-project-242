@@ -13,16 +13,45 @@
 
 ## Установка
 
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
+### Требования
+
+- [Go](https://go.dev/dl/) 1.27.2 или новее
+- [golangci-lint](https://golangci-lint.run/) v2 — только для разработки (запуск линтера)
+
+### Клонирование и зависимости
 
 ```bash
 git clone https://github.com/EAplemakh/go-project-242.git
 cd go-project-242
+go mod download
+```
+
+Зависимости (`github.com/urfave/cli/v3`) также будут загружены автоматически при первой сборке.
+
+### Сборка
+
+```bash
+make build
+```
+
+Исполняемый файл появится в `bin/hexlet-path-size`. Проверить, что всё работает:
+
+```bash
+./bin/hexlet-path-size -h
 ```
 
 ## Использование
+[Демо по использованию утилиты hexlet-path-size](https://asciinema.org/a/ijbvRR1jLFEyApyN)
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+Вывод справки:
+```bash
+./bin/hexlet-path-size -h
+```
+
+Запуск со всеми флагами:
+```bash
+./bin/hexlet-path-size -H -a -r testdata
+```
 
 ---
 
